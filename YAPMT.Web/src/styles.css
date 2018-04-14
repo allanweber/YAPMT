@@ -1,0 +1,14 @@
+@import "~bootstrap/dist/css/bootstrap.css";
+
+body {
+  padding-top: 80px;
+}
+
+.starter-template {
+  padding: 3rem 1.5rem;
+  text-align: center;
+}
+
+.margin-confirm {
+  margin: 3px 3px 3px 3px;
+}

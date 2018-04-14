@@ -1,0 +1,34 @@
+
+<div class="row">
+  <div class="col-10">
+    <h1>Livros</h1>
+  </div>
+  <div class="col-2">
+    <a class="btn btn-primary" href="#" role="button" routerLink="novo">Novo</a>
+  </div>
+</div>
+<div *ngIf="livros">
+  <table class="table table-striped table-hover table-bordered">
+    <thead>
+      <tr>
+        <th scope="col">#</th>
+        <th scope="col">Título</th>
+        <th scope="col">Autor</th>
+        <th scope="col">Ano</th>
+        <th scope="col"></th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let livro of livros">
+        <th scope="row"><a [routerLink]="[livro.id]" >{{ livro.id }}</a></th>
+        <td>{{ livro.title }} </td>
+        <td>{{ livro.author }} </td>
+        <td>{{ livro.year }} </td>
+        <td>
+          <button [routerLink]="[livro.id]" title="Editar" type="button" class="btn btn-link"><i class="fas fa-edit"></i></button>
+          <button (click)="delete(livro)" title="Deletar" type="button" class="btn btn-link"><i class="fas fa-trash-alt"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
