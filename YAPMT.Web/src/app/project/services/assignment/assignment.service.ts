@@ -27,7 +27,7 @@ export class AssignmentService extends BaseRequests {
   doneTask(assignmentId: number) {
     return this.http
       .get(
-        `${this.appConfig.backendApi}${this.path}/${assignmentId}/done`,
+        `${this.appConfig.backendApi}${this.path}${assignmentId}/done`,
         this.getOptionsHeader(),
       )
       .map(result => result.json())

@@ -58,7 +58,11 @@ export class ProjectStatusComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.serviceProjectSubs.unsubscribe();
-    this.paramSubscription.unsubscribe();
+    if (this.serviceProjectSubs) {
+      this.serviceProjectSubs.unsubscribe();
+    }
+    if (this.paramSubscription) {
+      this.paramSubscription.unsubscribe();
+    }
   }
 }

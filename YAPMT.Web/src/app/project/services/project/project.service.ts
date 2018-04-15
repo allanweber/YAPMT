@@ -48,7 +48,7 @@ export class ProjectService extends BaseRequests {
   getStatus(id: number): Observable<ProjectStatus> {
     return this.http
       .get(
-        `${this.appConfig.backendApi}${this.path}/${id}/status`,
+        `${this.appConfig.backendApi}${this.path}${id}/status`,
         this.getOptionsHeader(),
       )
       .map(result => result.json())
