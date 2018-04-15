@@ -1,0 +1,12 @@
+.completed-task {
+  color: #ccc;
+  text-decoration: line-through;
+}
+
+.late-task {
+  color: red;
+}
+
+.late-task .completed-task{
+  color: red;
+}

@@ -35,13 +35,13 @@ namespace YAPMT.Api.Controllers
 
         [HttpGet]
         [Route("project/{projectId:int}")]
-        public async Task<IActionResult> Get(int projectId)
+        public async Task<IActionResult> GetByProject(int projectId)
         {
             var tasks = await this.AssignmentRepository.GetAllByProject(projectId);
 
             var dto = this.Mapper.Map<IEnumerable<AssignmentDto>>(tasks);
 
-            return Ok(tasks);
+            return Ok(dto);
         }
 
         [HttpGet]

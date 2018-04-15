@@ -33,7 +33,7 @@ namespace YAPMT.Test
             {
                 Completed = false,
                 Description = "Task 1",
-                DueDate = DateTime.Now.AddDays(1),
+                DueDate = DateTime.Now.AddDays(1).ToString("MM/dd/yyyy"),
                 User = "allan",
                 ProjectId = 1
             };
@@ -47,11 +47,11 @@ namespace YAPMT.Test
             await this.insertAssignment(insert, HttpStatusCode.OK);
 
             insert.Description = "Task 2";
-            insert.DueDate = DateTime.Now.AddDays(-1);
+            insert.DueDate = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy");
             await this.insertAssignment(insert, HttpStatusCode.OK);
 
             insert.Description = "Task 3";
-            insert.DueDate = DateTime.Now;
+            insert.DueDate = DateTime.Now.ToString("MM/dd/yyyy");
             await this.insertAssignment(insert, HttpStatusCode.OK);
 
             var all = await this.getAllAssignments();
@@ -67,7 +67,7 @@ namespace YAPMT.Test
                 Id = 1,
                 Completed = false,
                 Description = "Task um",
-                DueDate = DateTime.Now.AddDays(1),
+                DueDate = DateTime.Now.AddDays(1).ToString("MM/dd/yyyy"),
                 User = "allan",
                 ProjectId = 1
             };
@@ -118,43 +118,43 @@ namespace YAPMT.Test
 
         private async Task<HttpContent> insertAssignment(AssignmentInsertCommand postObj, HttpStatusCode statusExpected)
         {
-            var httpResponse = this.WebHostFixture.TestClient.PostAsObjectAsync(this.path, postObj).Result;
-            Assert.True(httpResponse.StatusCode == statusExpected, httpResponse.Content.ReadAsStringAsync().Result);
+            var httpResponse = await this.WebHostFixture.TestClient.PostAsObjectAsync(this.path, postObj);
+            Assert.True(httpResponse.StatusCode == statusExpected, await httpResponse.Content.ReadAsStringAsync());
             return httpResponse.Content;
         }
 
         private async Task<HttpContent> updateAssignment(AssignmentUpdateCommand updateObj, HttpStatusCode statusExpected)
         {
-            var httpResponse = this.WebHostFixture.TestClient.PutAsObjectAsync(this.path, updateObj).Result;
-            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, httpResponse.Content.ReadAsStringAsync().Result);
+            var httpResponse = await this.WebHostFixture.TestClient.PutAsObjectAsync(this.path, updateObj);
+            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, await httpResponse.Content.ReadAsStringAsync());
             return httpResponse.Content;
         }
 
         private async Task<IList<AssignmentDto>> getAllAssignments()
         {
-            var httpResponse = this.WebHostFixture.TestClient.GetAsync(this.path).Result;
-            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, httpResponse.Content.ReadAsStringAsync().Result);
-            return httpResponse.Content.ReadAsObjectAsync<IList<AssignmentDto>>().Result;
+            var httpResponse = await this.WebHostFixture.TestClient.GetAsync(this.path);
+            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, await httpResponse.Content.ReadAsStringAsync());
+            return await httpResponse.Content.ReadAsObjectAsync<IList<AssignmentDto>>();
         }
 
         private async Task<AssignmentDto> getAssignmentById(int id)
         {
-            var httpResponse = this.WebHostFixture.TestClient.GetAsync($"{this.path}/{id}").Result;
-            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, httpResponse.Content.ReadAsStringAsync().Result);
-            return httpResponse.Content.ReadAsObjectAsync<AssignmentDto>().Result;
+            var httpResponse = await this.WebHostFixture.TestClient.GetAsync($"{this.path}/{id}");
+            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, await httpResponse.Content.ReadAsStringAsync());
+            return await httpResponse.Content.ReadAsObjectAsync<AssignmentDto>();
         }
 
         private async Task<HttpContent> deleteAssignment(int id, HttpStatusCode statusExpected)
         {
-            var httpResponse = this.WebHostFixture.TestClient.DeleteAsync($"{this.path}/{id}").Result;
-            Assert.True(httpResponse.StatusCode == statusExpected, httpResponse.Content.ReadAsStringAsync().Result);
+            var httpResponse = await this.WebHostFixture.TestClient.DeleteAsync($"{this.path}/{id}");
+            Assert.True(httpResponse.StatusCode == statusExpected, await httpResponse.Content.ReadAsStringAsync());
             return httpResponse.Content;
         }
 
         private async Task<HttpContent> doneAssignment(int id, HttpStatusCode statusExpected)
         {
-            var httpResponse = this.WebHostFixture.TestClient.GetAsync($"{this.path}/{id}/done").Result;
-            Assert.True(httpResponse.StatusCode == statusExpected, httpResponse.Content.ReadAsStringAsync().Result);
+            var httpResponse = await  this.WebHostFixture.TestClient.GetAsync($"{this.path}/{id}/done");
+            Assert.True(httpResponse.StatusCode == statusExpected, await httpResponse.Content.ReadAsStringAsync());
             return httpResponse.Content;
         }
     }

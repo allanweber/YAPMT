@@ -1,0 +1,19 @@
+<div *ngIf="assignment">
+  <div class="container">
+    <div class="row justify-content-md-left" [ngClass]="{'completed-task': assignment.completed, 'late-task': assignment.isLate }">
+      <div class="col-md-auto">
+        <input class="form-check-input" type="checkbox" [(ngModel)]="assignment.completed" id="defaultCheck2" [disabled]="assignment.completed"
+          (click)="done()">
+      </div>
+      <div class="col-md-auto">
+        {{assignment.description}}
+      </div>
+      <div class="col-md-auto">
+        @{{assignment.user}}
+      </div>
+      <div class="col-md-auto">
+        {{assignment.relativeTime}}
+      </div>
+    </div>
+  </div>
+</div>

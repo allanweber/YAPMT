@@ -2,11 +2,14 @@
 using MediatR;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.AspNetCore.Localization;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Swashbuckle.AspNetCore.Swagger;
 using System;
+using System.Collections.Generic;
+using System.Globalization;
 using System.IO;
 using YAPMT.Domain.Repositories;
 using YAPMT.Domain.Services;
@@ -42,6 +45,14 @@ namespace YAPMT.Api
                 {
                     options.UseMySQL(this.Configuration.GetConnectionString("RelationalConnection"));
                 }
+            });
+
+            services.Configure<RequestLocalizationOptions>(options =>
+            {
+                options.SupportedCultures.Clear();
+                options.DefaultRequestCulture = new Microsoft.AspNetCore.Localization.RequestCulture("en-US");
+                options.SupportedCultures = new List<CultureInfo> { new CultureInfo("en-US") };
+                options.SupportedUICultures = new List<CultureInfo> { new CultureInfo("en-US") };
             });
 
             services.AddMvc().AddMvcOptions(setup => setup.Filters.Add<CommandResultFilterAttribute>());
@@ -87,6 +98,14 @@ namespace YAPMT.Api
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
             app.UseMiddleware(typeof(ErrorHandlingMiddleware));
+
+            var cultureInfo = new CultureInfo("en-US");
+            app.UseRequestLocalization(new RequestLocalizationOptions
+            {
+                DefaultRequestCulture = new RequestCulture(cultureInfo),
+                SupportedCultures = new List<CultureInfo> { cultureInfo },
+                SupportedUICultures = new List<CultureInfo> { cultureInfo },
+            });
 
             app.UseMvcWithDefaultRoute();
 

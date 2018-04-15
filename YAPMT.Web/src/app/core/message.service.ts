@@ -4,8 +4,8 @@ export class MessageService {
   static fatalError(message: string) {
     swal({
       type: 'error',
-      title: 'Ocorreu um erro',
-      text: message
+      title: 'Fatal Error',
+      text: message,
     });
   }
 
@@ -16,7 +16,8 @@ export class MessageService {
       toast: true,
       timer: 3000,
       showConfirmButton: false,
-      position: 'top-end'
+      position: 'top-end',
+      background: '#c7e2d5',
     });
   }
 
@@ -27,7 +28,8 @@ export class MessageService {
       toast: true,
       timer: 3000,
       showConfirmButton: false,
-      position: 'top-end'
+      position: 'top-end',
+      background: '#e2c7d4',
     });
   }
 
@@ -37,12 +39,12 @@ export class MessageService {
       text: message,
 
       showCancelButton: true,
-      confirmButtonText: 'Sim, remover!',
-      cancelButtonText: 'Não, cancelar!',
+      confirmButtonText: 'Yes!',
+      cancelButtonText: 'No!',
       confirmButtonClass: 'btn btn-success margin-confirm',
       cancelButtonClass: 'btn btn-danger margin-confirm',
       buttonsStyling: false,
-      reverseButtons: true
+      reverseButtons: true,
     }).then(result => {
       if (result.value) {
         return true;

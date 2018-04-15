@@ -4,7 +4,7 @@ import {
   RequestOptions,
   RequestOptionsArgs,
   Response,
-  ResponseContentType
+  ResponseContentType,
 } from '@angular/http';
 import { MessageService } from './message.service';
 import { Observable } from 'rxjs/Observable';
@@ -14,6 +14,7 @@ export class BaseRequests {
   getHeaders(): Headers {
     const headers = new Headers();
     headers.append('Access-Control-Allow-Origin', '*');
+    headers.append('Content-Type', 'application/json');
     return headers;
   }
 
@@ -27,8 +28,10 @@ export class BaseRequests {
 
     if (errorObj.result) {
       MessageService.ErrorToaster(errorObj.result);
-    } else {
+    } else if (errorObj.Message) {
       MessageService.fatalError(errorObj.Message);
+    } else {
+      MessageService.fatalError(errorObj);
     }
 
     return Observable.throw(error);

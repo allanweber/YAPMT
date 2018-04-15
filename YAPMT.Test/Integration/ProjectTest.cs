@@ -76,24 +76,24 @@ namespace YAPMT.Test
 
         private async Task<HttpContent> insertProject(ProjectInsertCommand postObj, HttpStatusCode statusExpected)
         {
-            var httpResponse = this.WebHostFixture.TestClient.PostAsObjectAsync(this.path, postObj).Result;
-            Assert.True(httpResponse.StatusCode == statusExpected, httpResponse.Content.ReadAsStringAsync().Result);
+            var httpResponse = await this.WebHostFixture.TestClient.PostAsObjectAsync(this.path, postObj);
+            Assert.True(httpResponse.StatusCode == statusExpected, await httpResponse.Content.ReadAsStringAsync());
             return httpResponse.Content;
         }
 
         private async Task<HttpContent> updateProject(ProjectUpdateCommand updateObj, HttpStatusCode statusExpected)
         {
 
-            var httpResponse = this.WebHostFixture.TestClient.PutAsObjectAsync(this.path, updateObj).Result;
-            Assert.True(httpResponse.StatusCode == statusExpected, httpResponse.Content.ReadAsStringAsync().Result);
+            var httpResponse = await this.WebHostFixture.TestClient.PutAsObjectAsync(this.path, updateObj);
+            Assert.True(httpResponse.StatusCode == statusExpected, await httpResponse.Content.ReadAsStringAsync());
             return httpResponse.Content;
         }
 
         private async Task<IList<ProjectDto>> getAllProjects()
         {
-            var httpResponse = this.WebHostFixture.TestClient.GetAsync(this.path).Result;
-            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, httpResponse.Content.ReadAsStringAsync().Result);
-            return httpResponse.Content.ReadAsObjectAsync<IList<ProjectDto>>().Result;
+            var httpResponse = await this.WebHostFixture.TestClient.GetAsync(this.path);
+            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, await httpResponse.Content.ReadAsStringAsync());
+            return await httpResponse.Content.ReadAsObjectAsync<IList<ProjectDto>>();
         }
     }
 }

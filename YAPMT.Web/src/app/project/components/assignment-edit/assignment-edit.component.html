@@ -1,0 +1,16 @@
+<form class="form-inline" [formGroup]="form" (keyup.enter)="onSave()" (ngSubmit)="onSave()">
+  <input type="text" class="form-control no-border" id="description" placeholder="type new task" formControlName="description"
+    [(ngModel)]="assignment.description" required>
+
+  <input type="text" class="form-control no-border" id="owner" placeholder="@owner" formControlName="owner" [(ngModel)]="assignment.user"
+    required>
+
+  <div class="input-group">
+    <input type="text" class="form-control no-border" id="dueDate" placeholder="MM/dd/yyyy" formControlName="dueDate" [(ngModel)]="assignment.dueDate"
+      required mask="00/00/0000" dropSpecialCharacters="false">
+  </div>
+</form>
+
+<p>
+  <small>To save press enter after fill all fields</small>
+</p>

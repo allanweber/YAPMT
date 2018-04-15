@@ -65,7 +65,7 @@ namespace YAPMT.Framework.Controllers
         {
             var entity = await this.Repository.GetAsync(id);
 
-            if (entity == null) return NotFound();
+            if (entity == null) return BadRequest("Not Founded");
 
             var dto = Mapper.Map<TEntity, TGetDto>(entity);
 

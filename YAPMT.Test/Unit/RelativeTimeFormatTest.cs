@@ -8,7 +8,7 @@ namespace YAPMT.Test.Unit
     public class RelativeTimeFormatTest
     {
         [Fact]
-        public async Task test_format_times()
+        public void test_format_times()
         {
             string value = RelativeTimeFormat.RelativizeTime(DateTime.Now.AddDays(-1));
             Assert.True(value == "yesterday");

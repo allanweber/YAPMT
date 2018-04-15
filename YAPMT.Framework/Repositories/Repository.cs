@@ -19,70 +19,70 @@ namespace YAPMT.Framework.Repositories
             this.dbSet = this.dbContext.Set<TEntity>();
         }
 
-        public virtual Task CommitAsync()
+        public async virtual Task CommitAsync()
         {
-            return this.dbContext.SaveChangesAsync();
+            await this.dbContext.SaveChangesAsync();
         }
 
-        public virtual Task<long> CountAsync()
+        public async virtual Task<long> CountAsync()
         {
-            return this.Query().LongCountAsync();
+            return await this.Query().LongCountAsync();
         }
 
-        public virtual Task<long> CountAsync(BaseSpecification<TEntity> specification)
+        public async virtual Task<long> CountAsync(BaseSpecification<TEntity> specification)
         {
             if (specification == null)
                 throw new ArgumentNullException(nameof(specification));
 
-            return this.Query().LongCountAsync(specification.Expression);
+            return await this.Query().LongCountAsync(specification.Expression);
         }
 
-        public virtual Task DeleteAsync(TEntity entity)
+        public async virtual Task DeleteAsync(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            return Task.Run(() => this.dbSet.Remove(entity));
+            await Task.Run(() => this.dbSet.Remove(entity));
         }
 
-        public virtual Task<bool> ExistsAsync(BaseSpecification<TEntity> specification)
+        public async virtual Task<bool> ExistsAsync(BaseSpecification<TEntity> specification)
         {
             if (specification == null)
                 throw new ArgumentNullException(nameof(specification));
 
-            return this.Query().AnyAsync(specification.Expression);
+            return await this.Query().AnyAsync(specification.Expression);
         }
 
-        public virtual Task<TEntity> GetAsync(params object[] keys)
+        public async virtual Task<TEntity> GetAsync(params object[] keys)
         {
             if (keys == null)
                 throw new ArgumentNullException(nameof(keys));
 
-            return this.dbSet.FindAsync(keys);
+            return await this.dbSet.FindAsync(keys);
         }
 
-        public virtual Task InsertAsync(TEntity entity)
+        public async virtual Task InsertAsync(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            return this.dbSet.AddAsync(entity);
+            await this.dbSet.AddAsync(entity);
         }
 
-        public virtual Task<List<TEntity>> QueryAsync(BaseSpecification<TEntity> specification)
+        public async virtual Task<List<TEntity>> QueryAsync(BaseSpecification<TEntity> specification)
         {
             if (specification == null)
                 throw new ArgumentNullException(nameof(specification));
 
-            return this.Query().Where(specification.Expression).ToListAsync();
+            return await this.Query().Where(specification.Expression).ToListAsync();
         }
 
-        public virtual Task UpdateAsync(TEntity entity)
+        public async virtual Task UpdateAsync(TEntity entity)
         {
             if (entity == null)
                 throw new ArgumentNullException(nameof(entity));
 
-            return Task.Run(() => this.dbSet.Update(entity));
+            await  Task.Run(() => this.dbSet.Update(entity));
         }
 
         protected IQueryable<TEntity> QueryAsTracking()
@@ -95,9 +95,9 @@ namespace YAPMT.Framework.Repositories
             return this.dbSet.AsNoTracking();
         }
 
-        public virtual Task<List<TEntity>> GetAllAsync()
+        public async virtual Task<List<TEntity>> GetAllAsync()
         {
-            return this.Query().ToListAsync();
+            return await this.Query().ToListAsync();
         }
     }
 }

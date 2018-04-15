@@ -29,9 +29,11 @@ namespace YAPMT.Api.Controllers
             IProjectRepository projectRepository, IProjectService projectService)
             : base(mapper, mediator, projectRepository)
         {
+            ProjectRepository = projectRepository;
             this.ProjectService = projectService;
         }
 
+        public IProjectRepository ProjectRepository { get; }
         public IProjectService ProjectService { get; }
 
         [HttpGet]

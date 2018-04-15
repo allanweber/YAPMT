@@ -1,0 +1,10 @@
+<div class="row align-items-center">
+  <div class="col-6">
+    <div *ngIf="projectStatus">
+      {{projectStatus.completed}}/{{projectStatus.late}}/{{projectStatus.total}}
+    </div>
+  </div>
+  <div class="col-6">
+    <button type="button" class="btn btn-link" (click)="delete()" [disabled]="isDeleting">Delete project</button>
+  </div>
+</div>

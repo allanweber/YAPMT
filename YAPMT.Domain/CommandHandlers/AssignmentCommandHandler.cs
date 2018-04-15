@@ -1,4 +1,6 @@
-﻿using System.Threading;
+﻿using System;
+using System.Globalization;
+using System.Threading;
 using System.Threading.Tasks;
 using AutoMapper;
 using MediatR;
@@ -10,7 +12,7 @@ using YAPMT.Framework.Specifications;
 
 namespace YAPMT.Domain.CommandHandlers
 {
-    public class AssignmentCommandHandler:
+    public class AssignmentCommandHandler :
         IRequestHandler<AssignmentInsertCommand, ICommandResult>,
         IRequestHandler<AssignmentUpdateCommand, ICommandResult>,
         IRequestHandler<AssignmentDeleteCommand, ICommandResult>
@@ -28,6 +30,12 @@ namespace YAPMT.Domain.CommandHandlers
 
         public async Task<ICommandResult> Handle(AssignmentInsertCommand request, CancellationToken cancellationToken)
         {
+            DateTime outDate;
+            if (!DateTime.TryParse(request.DueDate, out outDate))
+            {
+                return new FailureResult("Invalid Due Date");
+            }
+
             var entity = this.Mapper.Map<AssignmentInsertCommand, Assignment>(request);
 
             ICommandResult result = this.validate(entity);
@@ -40,7 +48,7 @@ namespace YAPMT.Domain.CommandHandlers
 
             await this.AssignmentRepository.CommitAsync();
 
-            return new SuccessResult();
+            return new SuccessResult(entity.Id);
         }
 
         public async Task<ICommandResult> Handle(AssignmentUpdateCommand request, CancellationToken cancellationToken)

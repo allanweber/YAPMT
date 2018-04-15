@@ -24,12 +24,12 @@ namespace YAPMT.Test.Integration
         public async Task get_status_project()
         {
             await this.insertProject("Projeto 1");
-           
+
             AssignmentInsertCommand today = new AssignmentInsertCommand
             {
                 Completed = false,
                 Description = "Task 1",
-                DueDate = DateTime.Now,
+                DueDate = DateTime.Now.ToString("MM/dd/yyyy"),
                 User = "allan",
                 ProjectId = 1
             };
@@ -38,7 +38,7 @@ namespace YAPMT.Test.Integration
             {
                 Completed = false,
                 Description = "Task 1",
-                DueDate = DateTime.Now.AddDays(1),
+                DueDate = DateTime.Now.AddDays(1).ToString("MM/dd/yyyy"),
                 User = "allan",
                 ProjectId = 1
             };
@@ -47,7 +47,7 @@ namespace YAPMT.Test.Integration
             {
                 Completed = false,
                 Description = "Task 1",
-                DueDate = DateTime.Now.AddDays(-1),
+                DueDate = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy"),
                 User = "allan",
                 ProjectId = 1
             };
@@ -65,7 +65,7 @@ namespace YAPMT.Test.Integration
             {
                 Completed = false,
                 Description = "Task 1",
-                DueDate = DateTime.Now.AddDays(2),
+                DueDate = DateTime.Now.AddDays(2).ToString("MM/dd/yyyy"),
                 User = "allan",
                 ProjectId = 1
             };
@@ -92,7 +92,7 @@ namespace YAPMT.Test.Integration
             {
                 Completed = false,
                 Description = "Task 1",
-                DueDate = DateTime.Now.AddDays(-1),
+                DueDate = DateTime.Now.AddDays(-1).ToString("MM/dd/yyyy"),
                 User = "allan",
                 ProjectId = 2
             };
@@ -123,21 +123,21 @@ namespace YAPMT.Test.Integration
 
         private async Task<ProjectStatusDto> getStatusProject(int projectId)
         {
-            var httpResponse = this.WebHostFixture.TestClient.GetAsync($"api/v1/Project/{projectId}/status").Result;
-            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, httpResponse.Content.ReadAsStringAsync().Result);
-            return httpResponse.Content.ReadAsObjectAsync<ProjectStatusDto>().Result;
+            var httpResponse = await this.WebHostFixture.TestClient.GetAsync($"api/v1/Project/{projectId}/status");
+            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, await httpResponse.Content.ReadAsStringAsync());
+            return await httpResponse.Content.ReadAsObjectAsync<ProjectStatusDto>();
         }
 
         private async Task insertAssignment(AssignmentInsertCommand postObj)
         {
-            var httpResponse = this.WebHostFixture.TestClient.PostAsObjectAsync("api/v1/Assignment", postObj).Result;
-            Assert.True(httpResponse.StatusCode ==  HttpStatusCode.OK, httpResponse.Content.ReadAsStringAsync().Result);
+            var httpResponse = await this.WebHostFixture.TestClient.PostAsObjectAsync("api/v1/Assignment", postObj);
+            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, await httpResponse.Content.ReadAsStringAsync());
         }
 
         private async Task<HttpContent> doneAssignment(int id)
         {
-            var httpResponse = this.WebHostFixture.TestClient.GetAsync($"api/v1/Assignment/{id}/done").Result;
-            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, httpResponse.Content.ReadAsStringAsync().Result);
+            var httpResponse = await this.WebHostFixture.TestClient.GetAsync($"api/v1/Assignment/{id}/done");
+            Assert.True(httpResponse.StatusCode == HttpStatusCode.OK, await httpResponse.Content.ReadAsStringAsync());
             return httpResponse.Content;
         }
     }

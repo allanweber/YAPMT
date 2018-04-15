@@ -36,7 +36,9 @@ namespace YAPMT.Domain.CommandHandlers
 
             await this.ProjectRepository.CommitAsync();
 
-            return new SuccessResult();
+            result.Result = entity.Id;
+
+            return new SuccessResult(entity.Id);
         }
 
         public async Task<ICommandResult> Handle(ProjectUpdateCommand request, CancellationToken cancellationToken)

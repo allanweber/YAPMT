@@ -1,4 +1,10 @@
-<app-navbar></app-navbar>
-<div class="container">
-  <router-outlet></router-outlet>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-2 px-1 bg-secondary" id="sticky-sidebar">
+      <app-navbar></app-navbar>
+    </div>
+    <div class="col bg-light margin-10">
+      <router-outlet></router-outlet>
+    </div>
+  </div>
 </div>

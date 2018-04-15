@@ -1,0 +1,15 @@
+<table class="table" *ngIf="assignments">
+  <tbody>
+    <tr *ngFor="let assign of assignments">
+      <div *ngIf="!assign.isNew">
+        <app-assignment-detail [assignment]="assign"></app-assignment-detail>
+      </div>
+      <div *ngIf="assign.isNew">
+        <app-assignment-edit [projectId]="projectId" (taskSaved)="taskSaved($event)"></app-assignment-edit>
+      </div>
+    </tr>
+  </tbody>
+</table>
+
+
+<button type="button" class="btn btn-link" (click)="addTask()" [disabled]="hasAnyNew()" *ngIf="!!assignments">+ Add Task</button>

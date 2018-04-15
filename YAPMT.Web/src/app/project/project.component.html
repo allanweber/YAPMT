@@ -1,0 +1,17 @@
+<div class="row">
+  <div class="col-8">
+    <div *ngIf="project">
+      <h2> {{project.name}}</h2>
+    </div>
+    <div *ngIf="!project">
+      <input type="text" class="form-control" #projectName aria-label="Large" aria-describedby="inputGroup-sizing-sm" placeholder="Type new project name (press Enter to save)"
+        (keyup.enter)="create(projectName.value)">
+    </div>
+  </div>
+  <div class=" col-4 text-right">
+    <app-project-status *ngIf="project"></app-project-status>
+  </div>
+</div>
+<div class="dropdown-divider "></div>
+
+<app-assignment-list></app-assignment-list>

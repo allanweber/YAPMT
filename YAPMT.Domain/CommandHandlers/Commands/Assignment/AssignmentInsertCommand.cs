@@ -10,7 +10,7 @@ namespace YAPMT.Domain.CommandHandlers.Commands.Assignment
 
         public string User { get; set; }
 
-        public DateTime DueDate { get; set; }
+        public string DueDate { get; set; }
 
         public bool Completed { get; set; }
 

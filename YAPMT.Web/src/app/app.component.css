@@ -1,0 +1,15 @@
+body {
+  margin: 0;
+}
+
+#sticky-sidebar {
+  min-height: 100vh;
+}
+
+.bg-secondary {
+  background-color: #6c757d59 !important;
+}
+
+.margin-10 {
+  margin-top: 10px;
+}

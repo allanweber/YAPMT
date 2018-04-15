@@ -6,19 +6,28 @@ import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AppConfig, AppConfigFactory } from './core/app-config.service';
 import { NavbarComponent } from './navbar/navbar.component';
 import { PageNotFoundedComponent } from './page-not-founded/page-not-founded.component';
-import { LivrosComponent } from './livros/livros.component';
-import { LivroDetailComponent } from './livros/livro-detail/livro-detail.component';
+import { NgxMaskModule } from 'ngx-mask';
 
 import { routing } from './app.routing.module';
-import { LivroService } from './livros/shared/services/livro.service';
+import { ProjectService } from './project/services/project/project.service';
+import { AssignmentService } from './project/services/assignment/assignment.service';
+import { ProjectComponent } from './project/project.component';
+import { AssignmentListComponent } from './project/components/assignment-list/assignment-list.component';
+import { MessageBusService } from './core/message-bus.service';
+import { ProjectStatusComponent } from './project/components/project-status/project-status.component';
+import { AssignmentDetailComponent } from './project/components/assignment-detail/assignment-detail.component';
+import { AssignmentEditComponent } from './project/components/assignment-edit/assignment-edit.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     NavbarComponent,
     PageNotFoundedComponent,
-    LivrosComponent,
-    LivroDetailComponent,
+    ProjectComponent,
+    AssignmentListComponent,
+    ProjectStatusComponent,
+    AssignmentDetailComponent,
+    AssignmentEditComponent,
   ],
   imports: [
     BrowserModule,
@@ -26,6 +35,7 @@ import { LivroService } from './livros/shared/services/livro.service';
     FormsModule,
     ReactiveFormsModule,
     routing,
+    NgxMaskModule.forRoot(),
   ],
   providers: [
     AppConfig,
@@ -35,8 +45,11 @@ import { LivroService } from './livros/shared/services/livro.service';
       deps: [AppConfig],
       multi: true,
     },
-    LivroService,
+    ProjectService,
+    MessageBusService,
+    AssignmentService,
   ],
-  bootstrap: [AppComponent]
+
+  bootstrap: [AppComponent],
 })
-export class AppModule { }
+export class AppModule {}
